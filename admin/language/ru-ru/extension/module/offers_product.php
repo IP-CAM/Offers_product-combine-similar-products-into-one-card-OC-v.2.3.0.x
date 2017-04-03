@@ -11,7 +11,15 @@ $_['text_edit']        = 'Редактирование модуля';
 $_['entry_status']      = 'Статус';
 $_['entry_log']         = 'Вести лог работы модуля';
 
-$_['entry_master_product']  = 'Основной товар:';
+$_['entry_master_product']          = 'Основной товар:';
+$_['entry_master_product_helper']   = 'Данный товар является основным для других:';
+
+$_['select_master_product_id']          = 'Выберите основной товар:';
+$_['select_master_product_id_helper']   = '(Автодополнение)';
+$_['entry_master_product_id']           = 'Товар:';
+$_['entry_product']                     = 'Товар:';
+
+$_['entry_master_product_filter']       = 'Основной товар';
 
 $_['tab_slave_list']       = 'Предложения продукта';
 
