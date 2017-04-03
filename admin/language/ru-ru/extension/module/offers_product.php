@@ -19,7 +19,7 @@ $_['select_master_product_id_helper']   = '(Автодополнение)';
 $_['entry_master_product_id']           = 'Товар:';
 $_['entry_product']                     = 'Товар:';
 
-$_['entry_master_product_filter']       = 'Основной товар';
+$_['entry_master_product_filter']       = 'Основной товар:';
 
 $_['tab_slave_list']       = 'Предложения продукта';
 

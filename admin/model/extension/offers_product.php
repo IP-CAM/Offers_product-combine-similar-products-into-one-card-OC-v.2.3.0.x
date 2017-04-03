@@ -34,7 +34,9 @@ class ModelExtensionOffersProduct extends Model
         $this->model_extension_event->addEvent('ofp_6', 'admin/view/catalog/product_list/after', 'extension/offers_product_edit_product/openProductListAfter');
         $this->model_extension_event->addEvent('ofp_7', 'admin/view/catalog/product_list/before', 'extension/offers_product_edit_product/openProductListBefore');
 
-        for ($i = 1; $i <= 7; $i++) {
+        $this->model_extension_event->addEvent('ofp_8', 'admin/controller/catalog/product/getList/before', 'extension/offers_product_edit_product/getListBefore');
+
+        for ($i = 1; $i <= 8; $i++) {
             $this->writeLog("— addEvent('offers product before edit product : ofp_" . $i . "')");
         }
         $this->writeLog('END');
@@ -55,7 +57,7 @@ class ModelExtensionOffersProduct extends Model
         $this->writeLog('— ' . $text);
 
         $this->load->model('extension/event');
-        for ($i = 1; $i <= 7; $i++) {
+        for ($i = 1; $i <= 8; $i++) {
             $this->model_extension_event->deleteEvent('ofp_' . $i);
             $this->writeLog("— deleteEvent('offers product before edit product ofp_" . $i . "')");
         }
@@ -108,17 +110,8 @@ class ModelExtensionOffersProduct extends Model
         $this->writeLog($text);
     }
 
-    private function upadteSlaveOffersProductTables($cur_master_product_id, $product_id)
-    {
-        $this->cleanOffersProductTables($product_id);
 
-        $text = "INSERT INTO `" . DB_PREFIX . "offers_product`(master_id,slave_id) VALUES (" . (int)$cur_master_product_id . "," . (int)$product_id . ")";
-        $this->writeLog($text);
-        $this->db->query($text);
-        $this->writeLog('OK');
-    }
-
-    public function updateMasterOffersProductTables($slave_products, $master_id)
+    private function updateMasterOffersProductTables($slave_products, $master_id)
     {
         $this->cleanOffersProductTables($master_id);
         $has_error = false;
@@ -243,7 +236,9 @@ class ModelExtensionOffersProduct extends Model
             } else {
                 $all_slave_products = $this->getSlaveProducts();
                 $sql .= " AND p.master_product = '" . (int)$data['master_product'] . "'";
-                $sql .= " AND p.product_id NOT IN (" . implode(",", $all_slave_products) . ")";
+                if (count($all_slave_products)>0){
+                    $sql .= " AND p.product_id NOT IN (" . implode(",", $all_slave_products) . ")";
+                }
                 $this->log->write($sql);
             }
         }

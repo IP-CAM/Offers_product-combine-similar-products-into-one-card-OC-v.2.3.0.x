@@ -49,8 +49,8 @@ class ControllerExtensionOffersProductEditProduct extends Controller
             if ($this->config->get('offers_product_en_log')) {
                 $this->log->write('controller openProductBefore');
             }
-            $data = $this->loadLanguageForopenProductBefore($data);
-            $data = $this->loadMainDataForopenProductBefore($data);
+            $data = $this->loadLanguageForOpenProduct($data);
+            $data = $this->loadMainDataForOpenProduct($data);
         }
 
     }
@@ -81,15 +81,29 @@ class ControllerExtensionOffersProductEditProduct extends Controller
         }
     }
 
-    public function openProductListBefore(&$route, &$data){
+    public function openProductListBefore(&$route, &$data)
+    {
+        if ($this->config->get('offers_product_status')) {
+            if ($this->config->get('offers_product_en_log')) {
+                $this->log->write('controller openProductListBefore');
+            }
+
+            $data = $this->loadLanguageForOpenProductList($data);
+            $data = $this->loadMainDataForOpenProductList($data);
+        }
+    }
+    public function getListBefore(&$route, &$data){
+        $this->log->write('controller getListBefore');
+    }
+
+    public function openProductListAfter(&$route, &$data, &$output)
+    {
 
     }
-    public function openProductListAfter(&$route, &$data, &$output){
 
-    }
 //-------------------------------------------------------------------
-
-    private function loadMainDataForopenProductBefore($data)
+    //Product Form
+    private function loadMainDataForOpenProduct($data)
     {
         $this->load->model('catalog/product');
         $this->load->model('extension/offers_product');
@@ -119,7 +133,7 @@ class ControllerExtensionOffersProductEditProduct extends Controller
             if ($master_product_info) {
                 $data['cur_master_product'] = [
                     'id'   => $master_product_info['product_id'],
-                    'name' => $master_product_info['name']
+                    'name' => $master_product_info['name'],
                 ];
             }
         }
@@ -139,9 +153,9 @@ class ControllerExtensionOffersProductEditProduct extends Controller
 
             if ($sec_product_info) {
                 $data['slave_products'][] = [
-                    'product_id'   => $sec_product_info['product_id'],
-                    'name' => $sec_product_info['name'],
-                    'edit' => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $sec_product_info['product_id'], true)
+                    'product_id' => $sec_product_info['product_id'],
+                    'name'       => $sec_product_info['name'],
+                    'edit'       => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $sec_product_info['product_id'], true),
                 ];
             }
         }
@@ -150,7 +164,7 @@ class ControllerExtensionOffersProductEditProduct extends Controller
         return $data;
     }
 
-    private function loadLanguageForopenProductBefore($data)
+    private function loadLanguageForOpenProduct($data)
     {
         $this->load->language('extension/module/offers_product');
         $data['select_master_product_id_helper'] = $this->language->get('select_master_product_id_helper');
@@ -160,6 +174,29 @@ class ControllerExtensionOffersProductEditProduct extends Controller
         $data['entry_master_product'] = $this->language->get('entry_master_product');
         $data['tab_slave_list'] = $this->language->get('tab_slave_list');
         $data['entry_product'] = $this->language->get('entry_product');
+        return $data;
+    }
+
+    //Product List
+    private function loadMainDataForOpenProductList($data)
+    {
+        if (isset($this->request->get['master_product_filter'])) {
+            $master_product_filter = $this->request->get['master_product_filter'];
+        } else {
+            $master_product_filter = null;
+        }
+//        if (isset($this->request->get['filter_image'])) {
+//            $url .= '&filter_image=' . $this->request->get['filter_image'];
+//        }
+
+        return $data;
+    }
+
+    private function loadLanguageForOpenProductList($data)
+    {
+        $this->load->language('extension/module/offers_product');
+        $data['entry_master_product_filter'] = $this->language->get('entry_master_product_filter');
+
         return $data;
     }
 
