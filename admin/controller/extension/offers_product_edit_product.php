@@ -92,9 +92,6 @@ class ControllerExtensionOffersProductEditProduct extends Controller
             $data = $this->loadMainDataForOpenProductList($data);
         }
     }
-    public function getListBefore(&$route, &$data){
-        $this->log->write('controller getListBefore');
-    }
 
     public function openProductListAfter(&$route, &$data, &$output)
     {

@@ -5,6 +5,18 @@
     <version>1.0</version>
     <author>VarIzo</author>
     <link>skyq.ru</link>
+    <file path="admin/language/ru-ru/catalog/product.php">
+        <operation>
+            <search><![CDATA[<?php]]></search>
+            <add position="after" offset="1"><![CDATA[
+            	/*Auth: VarIzo Task: {offers product} Date:03.04.2017 !Start!*/
+                /*Comment: */
+                $_['entry_master_product']  = 'Основной товар:';
+                /*!End!*/
+                ]]>
+            </add>
+        </operation>
+    </file>
     <file path="admin/model/catalog/product.php">
         <operation>
             <search><![CDATA[$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";]]></search>

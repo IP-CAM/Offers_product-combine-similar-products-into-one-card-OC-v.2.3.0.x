@@ -34,9 +34,8 @@ class ModelExtensionOffersProduct extends Model
         $this->model_extension_event->addEvent('ofp_6', 'admin/view/catalog/product_list/after', 'extension/offers_product_edit_product/openProductListAfter');
         $this->model_extension_event->addEvent('ofp_7', 'admin/view/catalog/product_list/before', 'extension/offers_product_edit_product/openProductListBefore');
 
-        $this->model_extension_event->addEvent('ofp_8', 'admin/controller/catalog/product/getList/before', 'extension/offers_product_edit_product/getListBefore');
 
-        for ($i = 1; $i <= 8; $i++) {
+        for ($i = 1; $i <= 7; $i++) {
             $this->writeLog("— addEvent('offers product before edit product : ofp_" . $i . "')");
         }
         $this->writeLog('END');
@@ -57,7 +56,7 @@ class ModelExtensionOffersProduct extends Model
         $this->writeLog('— ' . $text);
 
         $this->load->model('extension/event');
-        for ($i = 1; $i <= 8; $i++) {
+        for ($i = 1; $i <= 7; $i++) {
             $this->model_extension_event->deleteEvent('ofp_' . $i);
             $this->writeLog("— deleteEvent('offers product before edit product ofp_" . $i . "')");
         }
