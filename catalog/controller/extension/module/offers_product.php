@@ -34,7 +34,6 @@ class ControllerExtensionModuleOffersProduct extends Controller
         $this->load->model('extension/module/offers_product');
         if (isset($data['product_id'])) {
             $master_product = $this->model_extension_module_offers_product->getProductMasterField($data['product_id']);
-
             $result = $this->model_extension_module_offers_product->getOffersProduct($data['product_id'], $master_product);
             $data['offers_product'] = [];
             foreach ($result as $product_id) {

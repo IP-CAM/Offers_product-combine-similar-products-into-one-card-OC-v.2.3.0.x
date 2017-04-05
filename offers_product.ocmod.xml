@@ -8,7 +8,7 @@
     <file path="catalog/view/theme/default/template/product/product.tpl">
         <operation>
             <search><![CDATA[<div id="product">]]></search>
-            <add position="after" offset="1"><![CDATA[
+            <add position="after" offset=""><![CDATA[
                 <!-- offers product -->
                 <?php if ($offers_product) { ?>
                 <div class="form-group">
