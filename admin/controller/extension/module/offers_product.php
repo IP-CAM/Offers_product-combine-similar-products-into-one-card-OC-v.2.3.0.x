@@ -19,14 +19,16 @@ class ControllerExtensionModuleOffersProduct extends Controller
         $this->load->model('setting/setting');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+            if (isset($this->request->post['offers_product_prefix_attr'])) {
+                $this->request->post['offers_product_prefix_attr'] = json_encode($this->request->post['offers_product_prefix_attr']);
+            }
             $this->model_setting_setting->editSetting('offers_product', $this->request->post);
 
             $this->session->data['success'] = $this->language->get('text_success');
 
             if (isset($this->request->post['apply']) and $this->request->post['apply']) {
                 $this->response->redirect($this->url->link('extension/module/offers_product', 'token=' . $this->session->data['token'], true));
-            }
-            else {
+            } else {
                 $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true));
             }
         }
@@ -80,6 +82,9 @@ class ControllerExtensionModuleOffersProduct extends Controller
         $data['button_apply'] = $this->language->get('button_apply');
         $data['button_cancel'] = $this->language->get('button_cancel');
 
+        $data['label_attr'] = $this->language->get('label_attr');
+        $data['entry_prefix_attr'] = $this->language->get('entry_prefix_attr');
+
         return $data;
     }
 
@@ -87,8 +92,7 @@ class ControllerExtensionModuleOffersProduct extends Controller
     {
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
-        }
-        else {
+        } else {
             $data['error_warning'] = '';
         }
         return $data;
@@ -100,17 +104,17 @@ class ControllerExtensionModuleOffersProduct extends Controller
 
         $data['breadcrumbs'][] = [
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => $this->language->get('text_extension'),
-            'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true)
+            'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true),
         ];
 
         $data['breadcrumbs'][] = [
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/module/offers_product', 'token=' . $this->session->data['token'], true)
+            'href' => $this->url->link('extension/module/offers_product', 'token=' . $this->session->data['token'], true),
         ];
         return $data;
     }
@@ -121,15 +125,40 @@ class ControllerExtensionModuleOffersProduct extends Controller
 
         if (isset($this->request->post['offers_product_status'])) {
             $data['offers_product_status'] = $this->request->post['offers_product_status'];
-        }
-        else {
+        } else {
             $data['offers_product_status'] = $this->config->get('offers_product_status');
         }
         if (isset($this->request->post['offers_product_en_log'])) {
             $data['offers_product_en_log'] = $this->request->post['offers_product_en_log'];
-        }
-        else {
+        } else {
             $data['offers_product_en_log'] = $this->config->get('offers_product_en_log');
+        }
+        if (isset($this->request->post['offers_product_prefix_attr'])) {
+            $data['offers_product_prefix_attr'] = $this->request->post['offers_product_prefix_attr'];
+        } elseif ($this->config->get('offers_product_prefix_attr')) {
+            $data['offers_product_prefix_attr'] = json_decode($this->config->get('offers_product_prefix_attr'), true);
+        } else {
+            $data['offers_product_prefix_attr'] = [""];
+        }
+
+        $this->load->model('catalog/attribute');
+        $filter_data = [
+            'sort'  => 'ad.name',
+            'order' => 'ASC',
+            'start' => 0,
+            'limit' => 100,
+        ];
+
+        $attribute_total = $this->model_catalog_attribute->getTotalAttributes();
+
+        $results = $this->model_catalog_attribute->getAttributes($filter_data);
+
+        foreach ($results as $result) {
+            $data['attributes'][] = [
+                'attribute_id' => $result['attribute_id'],
+                'name'         => $result['name'],
+                'prefix'       => $data['offers_product_prefix_attr'][$result['attribute_id']],
+            ];
         }
 
         return $data;
@@ -161,28 +190,24 @@ class ControllerExtensionModuleOffersProduct extends Controller
 
             if (isset($this->request->get['filter_name'])) {
                 $filter_name = $this->request->get['filter_name'];
-            }
-            else {
+            } else {
                 $filter_name = '';
             }
 
             if (isset($this->request->get['filter_model'])) {
                 $filter_model = $this->request->get['filter_model'];
-            }
-            else {
+            } else {
                 $filter_model = '';
             }
 
             if (isset($this->request->get['limit'])) {
                 $limit = $this->request->get['limit'];
-            }
-            else {
+            } else {
                 $limit = 5;
             }
             if (isset($this->request->get['master_product'])) {
                 $master_product = $this->request->get['master_product'];
-            }
-            else {
+            } else {
                 $master_product = 0;
             }
 
@@ -191,7 +216,7 @@ class ControllerExtensionModuleOffersProduct extends Controller
                 'filter_model'   => $filter_model,
                 'start'          => 0,
                 'limit'          => $limit,
-                'master_product' => $master_product
+                'master_product' => $master_product,
             ];
 
             $results = $this->model_extension_offers_product->getProducts($filter_data);
@@ -238,7 +263,7 @@ class ControllerExtensionModuleOffersProduct extends Controller
                     'name'       => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
                     'model'      => $result['model'],
 //                    'option'     => $option_data,
-                    'price'      => $result['price']
+                    'price'      => $result['price'],
                 ];
             }
         }

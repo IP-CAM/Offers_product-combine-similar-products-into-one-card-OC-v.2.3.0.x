@@ -98,6 +98,7 @@ class ControllerExtensionOffersProductEditProduct extends Controller
 
     }
 
+
 //-------------------------------------------------------------------
     //Product Form
     private function loadMainDataForOpenProduct($data)
@@ -182,9 +183,6 @@ class ControllerExtensionOffersProductEditProduct extends Controller
         } else {
             $master_product_filter = null;
         }
-//        if (isset($this->request->get['filter_image'])) {
-//            $url .= '&filter_image=' . $this->request->get['filter_image'];
-//        }
 
         return $data;
     }

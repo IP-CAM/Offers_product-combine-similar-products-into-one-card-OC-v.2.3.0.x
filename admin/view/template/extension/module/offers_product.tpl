@@ -62,6 +62,22 @@
                             </label>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
+                               for="input-attr-<?php echo $attr['attribute_id']; ?>"><?php echo $label_attr; ?></label>
+                    </div>
+                    <?php if(isset($attributes)){ ?>
+                        <?php foreach($attributes as $key => $attr){ ?>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"
+                                       for="input-attr-<?php echo $attr['attribute_id']; ?>"><?php echo $attr['name']; ?></label>
+                                <div class="col-sm-2">
+                                    <input name="offers_product_prefix_attr[<?php echo $attr['attribute_id']; ?>]" placeholder="<?php echo $entry_prefix_attr; ?>" id="input-attr-<?php echo $attr['attribute_id']; ?>" class="form-control"
+                                           type="text" value="<?php echo $attr['prefix']; ?>"/>
+                                </div>
+                            </div>
+                        <?php }?>
+                    <?php }?>
                 </form>
             </div>
         </div>

@@ -5,6 +5,26 @@
     <version>1.0</version>
     <author>VarIzo</author>
     <link>skyq.ru</link>
+    <file path="catalog/view/theme/default/template/product/product.tpl">
+        <operation>
+            <search><![CDATA[<div id="product">]]></search>
+            <add position="after" offset="1"><![CDATA[
+                <!-- offers product -->
+                <?php if ($offers_product) { ?>
+                <div class="form-group">
+                  <label class="control-label" for="select-offers-product"><?php echo $label_select_offers_product; ?></label>
+
+                    <?php foreach ($offers_product as $offer_product) { ?>
+                  <div><a href="<?php echo $offer_product['href']; ?>"><?php echo $offer_product['short_name']; ?> - <?php echo $offer_product['price']; ?></a></div>
+                    <?php } ?>
+
+                </div>
+                <?php } ?>
+                <!-- -->
+                ]]>
+            </add>
+        </operation>
+    </file>
     <file path="admin/language/ru-ru/catalog/product.php">
         <operation>
             <search><![CDATA[<?php]]></search>
