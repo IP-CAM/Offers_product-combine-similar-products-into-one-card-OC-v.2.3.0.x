@@ -147,25 +147,25 @@ class ControllerExtensionModuleOffersProduct extends Controller
             $data['offers_product_prefix_attr'] = [""];
         }
 
-        $this->load->model('catalog/attribute');
-        $filter_data = [
-            'sort'  => 'ad.name',
-            'order' => 'ASC',
-            'start' => 0,
-            'limit' => 100,
-        ];
+//        $this->load->model('catalog/attribute');
+//        $filter_data = [
+//            'sort'  => 'ad.name',
+//            'order' => 'ASC',
+//            'start' => 0,
+//            'limit' => 100,
+//        ];
 
-        $attribute_total = $this->model_catalog_attribute->getTotalAttributes();
-
-        $results = $this->model_catalog_attribute->getAttributes($filter_data);
-
-        foreach ($results as $result) {
-            $data['attributes'][] = [
-                'attribute_id' => $result['attribute_id'],
-                'name'         => $result['name'],
-                'prefix'       => $data['offers_product_prefix_attr'][$result['attribute_id']],
-            ];
-        }
+//        $attribute_total = $this->model_catalog_attribute->getTotalAttributes();
+//
+//        $results = $this->model_catalog_attribute->getAttributes($filter_data);
+//
+//        foreach ($results as $result) {
+//            $data['attributes'][] = [
+//                'attribute_id' => $result['attribute_id'],
+//                'name'         => $result['name'],
+//                'prefix'       => $data['offers_product_prefix_attr'][$result['attribute_id']],
+//            ];
+//        }
 
         return $data;
     }

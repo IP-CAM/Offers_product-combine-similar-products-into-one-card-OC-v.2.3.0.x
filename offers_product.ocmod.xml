@@ -69,6 +69,7 @@
             <search><![CDATA[<button type="button" id="button-filter"]]></search>
             <add position="before" offset="1"><![CDATA[
             <!-- offers product-->
+            <?php if($this->config->get('offers_product_status')) {?>
               <div class="form-group">
                 <label class="control-label" for="input-master-product-filter"><?php echo $entry_master_product_filter; ?></label>
                 <select name="filter_master_product" id="input-master-product-filter" class="form-control">
@@ -85,6 +86,7 @@
                   <?php } ?>
                 </select>
               </div>
+              <?php } ?>
                 ]]></add>
         </operation>
         <operation>
@@ -133,7 +135,7 @@
                 ]]></add>
         </operation>
         <operation>
-            <search><![CDATA['filter_image' => $filter_image,]]></search>
+            <search><![CDATA[=> $filter_image,]]></search>
             <add position="after" offset="1"><![CDATA[
                 /*Auth: VarIzo Task: {offers product} Date:03.04.2017 !Start!*/
                 /*Comment: */

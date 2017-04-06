@@ -73,13 +73,13 @@
                             </label>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group hide">
                         <label class="col-sm-2 control-label"
                                for="input-attr-<?php echo $attr['attribute_id']; ?>"><?php echo $label_attr; ?></label>
                     </div>
                     <?php if(isset($attributes)){ ?>
                         <?php foreach($attributes as $key => $attr){ ?>
-                            <div class="form-group">
+                            <div class="form-group hide">
                                 <label class="col-sm-2 control-label"
                                        for="input-attr-<?php echo $attr['attribute_id']; ?>"><?php echo $attr['name']; ?></label>
                                 <div class="col-sm-2">
