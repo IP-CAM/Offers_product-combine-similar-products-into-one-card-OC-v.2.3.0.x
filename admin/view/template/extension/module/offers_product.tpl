@@ -64,6 +64,17 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label"
+                               for="input-view-only-master">
+                            <?php echo $entry_view_only_master; ?>
+                        </label>
+                        <div class="col-sm-10">
+                            <label class="radio">
+                                <input type="checkbox" value="1" id="input-view-only-master" name="offers_product_view_only_master" <?php echo ($offers_product_view_only_master == 1)? 'checked' : ''; ?> />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"
                                for="input-attr-<?php echo $attr['attribute_id']; ?>"><?php echo $label_attr; ?></label>
                     </div>
                     <?php if(isset($attributes)){ ?>

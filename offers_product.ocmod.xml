@@ -5,6 +5,20 @@
     <version>1.0</version>
     <author>VarIzo</author>
     <link>skyq.ru</link>
+    <file path="catalog/model/catalog/product.php">
+        <operation>
+            <search><![CDATA[$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer_id'] . "'";]]></search>
+            <add position="before" offset="2"><![CDATA[
+                /*Auth: VarIzo Task: {offers product} Date:06.04.2017 !Start!*/
+                /*Comment: */
+                if($this->config->get('offers_product_view_only_master') && (__FUNCTION__ ==='getProducts' || __FUNCTION__ ==='getTotalProducts')){
+                    $sql .= " AND p.master_product = 1";
+                }
+                /*!End!*/
+                ]]>
+            </add>
+        </operation>
+    </file>
     <file path="catalog/view/theme/default/template/product/product.tpl">
         <operation>
             <search><![CDATA[<div id="product">]]></search>

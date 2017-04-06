@@ -8,7 +8,13 @@
  */
 class ControllerExtensionModuleOffersProduct extends Controller
 {
-
+//    public function Test(&$route, &$data, &$output){
+//        $this->log->write('controller Test');
+//        $this->log->write('—— $data ——');
+//        $this->log->write($data);
+//        $this->log->write('—— $output ——');
+//        $this->log->write($output);
+//    }
     public function openCatalogProductBefore(&$route, &$data, &$output)
     {
         if ($this->config->get('offers_product_status')) {

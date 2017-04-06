@@ -84,6 +84,7 @@ class ControllerExtensionModuleOffersProduct extends Controller
 
         $data['label_attr'] = $this->language->get('label_attr');
         $data['entry_prefix_attr'] = $this->language->get('entry_prefix_attr');
+        $data['entry_view_only_master'] = $this->language->get('entry_view_only_master');
 
         return $data;
     }
@@ -127,6 +128,11 @@ class ControllerExtensionModuleOffersProduct extends Controller
             $data['offers_product_status'] = $this->request->post['offers_product_status'];
         } else {
             $data['offers_product_status'] = $this->config->get('offers_product_status');
+        }
+        if (isset($this->request->post['offers_product_view_only_master'])) {
+            $data['offers_product_view_only_master'] = $this->request->post['offers_product_view_only_master'];
+        } else {
+            $data['offers_product_view_only_master'] = $this->config->get('offers_product_view_only_master');
         }
         if (isset($this->request->post['offers_product_en_log'])) {
             $data['offers_product_en_log'] = $this->request->post['offers_product_en_log'];
